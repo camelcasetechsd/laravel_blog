@@ -12,7 +12,7 @@ This is a training project for laravel 5.2
 7. Users can change their login credentials 
 8. Users can forgot their password and ask for new password ( use mailgun for mails ) 
 
-Nice to have
+# Nice to have
 1. Posts can contain images
 2. Posts can be downloaded or exported to pdf 
 3. Posts or comments can have arabic letters
