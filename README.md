@@ -16,3 +16,4 @@ This is a training project for laravel 5.2
 1. Posts can contain images
 2. Posts can be downloaded or exported to pdf 
 3. Posts or comments can have arabic letters
+4. Unit Testing
