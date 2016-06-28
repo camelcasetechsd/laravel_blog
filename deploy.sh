@@ -1,3 +1,2 @@
-#php artisan migrate:rollback
-php artisan migrate
-php artisan db:seed --class=UsersTableSeeder
+# drop tables , migrate Then use seed tables 
+php artisan db:seed --class=DatabaseSeeder
