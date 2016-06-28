@@ -14,46 +14,48 @@ use App\Http\Requests\PostFormRequest;
  */
 
 Route::get('/', function () {
-    return view('welcome');
+return view('welcome');
 });
 
 Route::get('/new-article', function() {
-    $users = App\User::all()->pluck('username', 'id');
-    return view('new_articale', compact('users', $users));
+$users = App\User::all()->pluck('username', 'id');
+return view('new_articale', compact('users', $users));
 });
 
 Route::post('/new-article', function ( PostFormRequest $request) {
-    $post = new App\Post();
-    
-    $file = Input::file('image');
-    $imageName = bin2hex(random_bytes(10)) . '.' . $request->file('image')->getClientOriginalExtension();
-    $imagePath = base_path() . '/public/images/articles/';
-    $file->move($imagePath,$imageName);
+$post = new App\Post();
 
-    $post->author_id = $request->username;
-    $post->title = $request->title;
-    $post->summary = $request->summary;
-    $post->content = $request->content;
-    $post->image = $imagePath.$imageName;
+$file = Input::file('image');
+$imageName = bin2hex(random_bytes(10)) . '.' . $request->file('image')->getClientOriginalExtension();
+$imagePath = base_path() . '/public/images/articles/';
+$file->move($imagePath, $imageName);
 
-    $post->save();
+$post->author_id = $request->username;
+$post->title = $request->title;
+$post->summary = $request->summary;
+$post->content = $request->content;
+$post->image = $imagePath . $imageName;
+
+$post->save();
 
 
 
-    return redirect()->route('feed');
+return redirect()->route('feed');
 });
 
 Route::get('/post/{postId}', function($postId) {
-    $post = App\Post::find($postId);
-    return view('post', array('post' => $post));
+$post = App\Post::find($postId);
+return view('post', array('post' => $post));
 });
 
-Route::get('/feed', ['as' => 'feed', function() {
-        $posts = App\Post::orderBy('created_at', 'desc')->get();
-        return view('feed', array('posts' => $posts));
-    }]);
+Route::auth();
 
-        Route::get('/register', function() {
-            return view('register');
-        });
-        
+Route::get('/home', 'HomeController@index');
+
+Route::get('/feed', ['as' => 'feed', function() {
+$posts = App\Post::orderBy('created_at', 'desc')->get();
+return view('feed', array('posts' => $posts));
+}]);
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
