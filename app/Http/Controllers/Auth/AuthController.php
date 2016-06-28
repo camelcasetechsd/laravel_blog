@@ -11,17 +11,28 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 class AuthController extends Controller
 {
     /*
-    |--------------------------------------------------------------------------
-    | Registration & Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
-    |
-    */
+      |--------------------------------------------------------------------------
+      | Registration & Login Controller
+      |--------------------------------------------------------------------------
+      |
+      | This controller handles the registration of new users, as well as the
+      | authentication of existing users. By default, this controller uses
+      | a simple trait to add these behaviors. Why don't you explore it?
+      |
+     */
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+use AuthenticatesAndRegistersUsers,
+    ThrottlesLogins;
+
+    /**
+     * validate with username field
+     */
+    const LOGIN_USERNAME_TYPE_USERNAME_TEXT = 'username';
+
+    /**
+     * validate with emial field
+     */
+    const LOGIN_USERNAME_TYPE_EMAIL_TEXT = 'email';
 
     /**
      * Where to redirect users after login / registration.
@@ -41,6 +52,16 @@ class AuthController extends Controller
     }
 
     /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function loginUsername()
+    {
+        return property_exists($this, 'username') ? $this->username : self::LOGIN_USERNAME_TYPE_USERNAME_TEXT;
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
@@ -49,10 +70,10 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'username' => 'required|max:255',
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
+                    'username' => 'required|max:255',
+                    'name' => 'required|max:255',
+                    'email' => 'required|email|max:255|unique:users',
+                    'password' => 'required|min:6|confirmed',
         ]);
     }
 
@@ -65,10 +86,11 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'username' => $data['username'],
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+                    'username' => $data['username'],
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'password' => bcrypt($data['password']),
         ]);
     }
+
 }
