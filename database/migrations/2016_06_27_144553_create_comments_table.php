@@ -5,6 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateCommentsTable extends Migration
 {
+
     /**
      * Run the migrations.
      *
@@ -14,7 +15,15 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('post_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->string('comment');
             $table->timestamps();
+        });
+    
+        Schema::create('comments', function (Blueprint $table) {
+            $table->integer('post_id')->references('id')->on('posts');
+            $table->integer('user_id')->references('id')->on('users');
         });
     }
 
@@ -27,4 +36,5 @@ class CreateCommentsTable extends Migration
     {
         Schema::drop('comments');
     }
+
 }

@@ -1,49 +1,40 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Laravel</title>
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+@extends('layouts.layout')
+@section('content')
+<div class="container">
+    <div class="content">
+        {{ Form::open(array("url" => "/new-article" , 'files' => true)) }}
 
-        <style>
-            html, body {
-                height: 100%;
-            }
+        {!! Form::label('Name') !!}
+        {!! Form::select('username', $users, null, array('required', 'class'=>'form-control')) !!}
 
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato';
-            }
+        <br>
+        <br>
 
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
+        {!! Form::label('Article Title') !!}
+        {!! Form::text('title', null, array('required', 'class'=>'form-control','placeholder'=>'Article Title'))!!}
+        <br>
+        <br>
 
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
+        {!! Form::label('Article Summary') !!}
+        {!! Form::text('summary', null, array('required', 'class'=>'form-control','placeholder'=>'Article Summary'))!!}
 
-            .title {
-                font-size: 96px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                <div class="form-control">
-                    {{ Form::open(array('url' => '/new-article')) }}
+        <br>  
+        <br>
 
-                    {{ Form::close() }}
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+        {!! Form::label('Article Content') !!}
+        {!! Form::textarea('content', null,array('required','class'=>'form-control','placeholder'=>'Article Content'))!!}
+
+        <br>
+        <br>
+        
+        {!! Form::label('Article Image') !!}
+        {!! Form::file('image', null) !!}
+
+        <br>
+        <br>
+
+        {!! Form::submit('Submit', null,array('class'=>'btn btn-warning','value'=>'Submit'))!!}
+
+        {{ Form::close() }}
+        @endsection
