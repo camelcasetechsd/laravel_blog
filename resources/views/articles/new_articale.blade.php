@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="content">
-        {{ Form::open(array("url" => "/new-article" , 'files' => true)) }}
+        {{ Form::open(array("url" => "/article" , 'files' => true)) }}
 
         {!! Form::label('Name') !!}
         {!! Form::select('username', $users, null, array('required', 'class'=>'form-control')) !!}

@@ -27,6 +27,7 @@ Route::auth();
  */
 Route::get('/home', 'HomeController@index');
 
+
 /**
  * Routes need authenticated Login
  */
@@ -40,3 +41,7 @@ Route::group(['middleware' => 'auth'], function() {
         'only' => array('create', 'update', 'store', 'destroy')
     ));
 });
+
+Route::resource('article', 'Articles\ArticleController', array(
+        'only' => array('index','show')
+    ));

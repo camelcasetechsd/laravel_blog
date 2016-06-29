@@ -54,8 +54,9 @@ class ArticleController extends Controller
 
         $file = $request->image;
         $imageName = bin2hex(random_bytes(10)) . '.' . $request->file('image')->getClientOriginalExtension();
-        $imagePath = base_path() . '/public/images/articles/';
-        $file->move($imagePath, $imageName);
+        $imagePath = '/images/articles/';
+        $containerPath = base_path() .'/public/'. $imagePath;
+        $file->move($containerPath, $imageName);
         $post->author_id = $request->username;
         $post->title = $request->title;
         $post->summary = $request->summary;
@@ -63,7 +64,7 @@ class ArticleController extends Controller
         $post->image = $imagePath . $imageName;
         $post->save();
         // redirect 
-        return redirect()->route('feed');
+        return redirect()->route('article.index');
     }
 
     /**

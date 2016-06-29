@@ -8,7 +8,7 @@
         <div class="col-lg-8">
             POSTs :
             @foreach ($articles as $post)
-            <div><h3><a href="/post/{{$post->id}}">{{ $post->title }}</a></h3></div>
+            <div><h3><a href="/article/{{$post->id}}">{{ $post->title }}</a></h3></div>
             <div>
                 by : {{$post->author->name}}
             </div>
