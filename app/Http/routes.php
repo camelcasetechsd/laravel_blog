@@ -12,50 +12,31 @@ use App\Http\Requests\PostFormRequest;
   | and give it the controller to call when that URI is requested.
   |
  */
+/**
+ * Welcome page
+ */
+Route::get('/', 'Controller@welcome');
 
-Route::get('/', function () {
-return view('welcome');
-});
-
-Route::get('/new-article', function() {
-$users = App\User::all()->pluck('username', 'id');
-return view('new_articale', compact('users', $users));
-});
-
-Route::post('/new-article', function ( PostFormRequest $request) {
-$post = new App\Post();
-
-$file = Input::file('image');
-$imageName = bin2hex(random_bytes(10)) . '.' . $request->file('image')->getClientOriginalExtension();
-$imagePath = base_path() . '/public/images/articles/';
-$file->move($imagePath, $imageName);
-
-$post->author_id = $request->username;
-$post->title = $request->title;
-$post->summary = $request->summary;
-$post->content = $request->content;
-$post->image = $imagePath . $imageName;
-
-$post->save();
-
-
-
-return redirect()->route('feed');
-});
-
-Route::get('/post/{postId}', function($postId) {
-$post = App\Post::find($postId);
-return view('post', array('post' => $post));
-});
-
+/**
+ * authetication routes
+ */
 Route::auth();
 
+/**
+ * Home page 
+ */
 Route::get('/home', 'HomeController@index');
 
-Route::get('/feed', ['as' => 'feed', function() {
-$posts = App\Post::orderBy('created_at', 'desc')->get();
-return view('feed', array('posts' => $posts));
-}]);
-Route::auth();
+/**
+ * Routes need authenticated Login
+ */
+Route::group(['middleware' => 'auth'], function() {
 
-Route::get('/home', 'HomeController@index');
+    /**
+     * Article Create & Store & Update routes need authentication
+     * Articles Index & Show are for Guests    
+     */
+    Route::resource('article', 'Articles\ArticleController', array(
+        'only' => array('create', 'update', 'store', 'destroy')
+    ));
+});

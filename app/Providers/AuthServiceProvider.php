@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 
 class AuthServiceProvider extends ServiceProvider
 {
+
     /**
      * The policy mappings for the application.
      *
@@ -26,6 +27,15 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
 
-        //
+        /**
+         *  no need for callbac functions , cause Gate automatically checks if user == null or 
+         *  user object does not have forUser method
+         */
+        $gate->define('access_create_post', function () {
+            $user = Auth::user();
+            echo '<pre>';var_dump($user);exit;
+        });
+//        $gate->define('create_post', 'Articles\ArticlesController@store');
     }
+
 }

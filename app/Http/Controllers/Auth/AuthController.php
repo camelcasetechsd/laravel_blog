@@ -25,6 +25,12 @@ use AuthenticatesAndRegistersUsers,
     ThrottlesLogins;
 
     /**
+     * Guard 
+     * @var string 
+     */
+//    protected $guard = 'admin';
+
+    /**
      * validate with username field
      */
     const LOGIN_USERNAME_TYPE_USERNAME_TEXT = 'username';
