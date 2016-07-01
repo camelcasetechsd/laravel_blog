@@ -38,10 +38,15 @@ Route::group(['middleware' => 'auth'], function() {
      * Articles Index & Show are for Guests    
      */
     Route::resource('article', 'Articles\ArticleController', array(
-        'only' => array('create', 'update', 'store', 'destroy')
+        'only' => array('create', 'store', 'edit', 'update', 'destroy')
+    ));
+
+    Route::resource('comment', 'Comments\CommentsController', array(
+        'only' => array('store', 'update')
     ));
 });
 
 Route::resource('article', 'Articles\ArticleController', array(
-        'only' => array('index','show')
-    ));
+    'only' => array('index', 'show')
+));
+

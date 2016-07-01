@@ -8,8 +8,8 @@ use App\Http\Requests;
 use Illuminate\Auth\Access\Gate as Gate;
 use App\Post as Post;
 use App\User as User;
-
-//use Illuminate\Support\Facades\Request 
+use App\Comment as Comment;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -21,7 +21,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Post::orderBy('created_at', 'desc')->get();
+        $articles = Post::orderBy('created_at', 'desc')->paginate(10);
         return view('articles.feed', array(
             'articles' => $articles
         ));
@@ -34,7 +34,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-//        if (Gate::denies('access_create_post'))
+//        if (Gate::denies('access_create_post',Auth::user()))
 //        {
 //            abort(403);
 //        }
@@ -55,9 +55,9 @@ class ArticleController extends Controller
         $file = $request->image;
         $imageName = bin2hex(random_bytes(10)) . '.' . $request->file('image')->getClientOriginalExtension();
         $imagePath = '/images/articles/';
-        $containerPath = base_path() .'/public/'. $imagePath;
+        $containerPath = public_path() . $imagePath;
         $file->move($containerPath, $imageName);
-        $post->author_id = $request->username;
+        $post->author_id = Auth::user()->id;
         $post->title = $request->title;
         $post->summary = $request->summary;
         $post->content = $request->content;
@@ -75,8 +75,11 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
+        
         $post = Post::find($id);
-        return view('articles.post', array('post' => $post));
+        return view('articles.post', array(
+            'post' => $post,
+        ));
     }
 
     /**
@@ -87,7 +90,7 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -110,7 +113,7 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 
 }

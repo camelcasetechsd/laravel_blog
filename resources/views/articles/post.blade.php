@@ -26,22 +26,35 @@
             <hr>
             <!-- Blog Comments -->
             <!-- Comments Form -->
-            <div class="well">
+            <div class="row">
                 <h4>Leave a Comment:</h4>
-                <form role="form">
-                    <div class="form-group">
-                        <textarea class="form-control" rows="3"></textarea>
+                {{ Form::open(array("url" => "/comment" , 'files' => true)) }}
+                <!--<form action="{{ route('comment.store') }}">-->
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-0">
+                        <img src="{{Auth::user()->image}}"><input type="text" name="comment" id="comment" class="form-control">
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-0">
+                        <input type="hidden" name="postId" id="postId" class="form-control" value="{{$post->id}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-0">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-btn fa-user"></i> Submit
+                        </button>
+                    </div>
+                </div>
+                {{ Form::close() }}        
             </div>
-
             <hr>
             <!-- Posted Comments -->
-            @foreach($post->comments as $comment)
+<!--            @foreach($post->comments as $comment)
             <div class="media">
                 <a class="pull-left" href="#">
-                    <img class="media-object" src="http://placehold.it/64x64" alt="">
+                    <img class="media-object" src="{{$comment->commenter->image}}" alt="">
                 </a>
                 <div class="media-body">
                     <h4 class="media-heading">{{$comment->commenter->name}}
@@ -51,7 +64,7 @@
                 </div>
             </div>
         </div>
-        @endforeach
+        @endforeach-->
     </div>
     <!-- /.row -->
 </div>

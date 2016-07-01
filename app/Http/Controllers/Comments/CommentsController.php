@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Comments;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\User as User;
 use APP\Post as Post;
+use App\Comment as Comment;
+use Illuminate\Support\Facades\Auth as Auth;
 
 class CommentsController extends Controller
 {
@@ -38,7 +41,13 @@ class CommentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $comment = new Comment();
+        $comment->comment = $request->comment;
+        $comment->user_id = Auth::user()->id;
+        $comment->post_id = $request->postId;
+        $comment->save();
+        
+        return redirect()->route('article.show', array($request->postId));
     }
 
     /**
