@@ -22,7 +22,7 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Post::orderBy('created_at', 'desc')->paginate(10);
-        return view('articles.feed', array(
+        return view('articles.index', array(
             'articles' => $articles
         ));
     }
@@ -34,8 +34,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        $users = User::all()->pluck('username', 'id');
-        return view('articles.new_articale', compact('users', $users));
+        return view('articles.create');
     }
 
     /**
@@ -84,7 +83,7 @@ class ArticleController extends Controller
     {
 
         $post = Post::find($id);
-        return view('articles.post', array(
+        return view('articles.show', array(
             'post' => $post,
         ));
     }
