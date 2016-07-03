@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\User as User;
 use APP\Post as Post;
 use App\Comment as Comment;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth as Auth;
 
 class CommentsController extends Controller
@@ -41,13 +42,21 @@ class CommentsController extends Controller
      */
     public function store(Request $request)
     {
-        $comment = new Comment();
-        $comment->comment = $request->comment;
-        $comment->user_id = Auth::user()->id;
-        $comment->post_id = $request->postId;
-        $comment->save();
-        
-        return redirect()->route('article.show', array($request->postId));
+        if ($request->ajax()) {
+            $data = Input::all();
+            $comment = new Comment();
+            $comment->comment = $data['comment'];
+            $comment->user_id = Auth::user()->id;
+            $comment->post_id = $data['post'];
+            $comment->save();
+
+            return response()->json([
+                        'name' => Auth::user()->name,
+//                        'image' => Auth::user()->image,
+                        'date' => date('F d, Y', strtotime($comment->created_at)),
+                        'status' => 'true'
+            ]);
+        }
     }
 
     /**

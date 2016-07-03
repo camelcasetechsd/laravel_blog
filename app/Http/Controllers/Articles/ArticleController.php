@@ -34,10 +34,6 @@ class ArticleController extends Controller
      */
     public function create()
     {
-//        if (Gate::denies('access_create_post',Auth::user()))
-//        {
-//            abort(403);
-//        }
         $users = User::all()->pluck('username', 'id');
         return view('articles.new_articale', compact('users', $users));
     }
@@ -50,6 +46,17 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
+        /**
+         * Validating article data
+         */
+        $this->validate($request, [
+            'title' => 'required|unique:posts|max:225',
+            'summary' => 'required',
+            'content' => 'required|max:1024',
+            'summary' => 'required',
+            'image' => 'required',
+        ]);
+
         $post = new Post();
 
         $file = $request->image;
@@ -75,7 +82,7 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        
+
         $post = Post::find($id);
         return view('articles.post', array(
             'post' => $post,

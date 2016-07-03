@@ -29,10 +29,13 @@
             <div class="row">
                 <h4>Leave a Comment:</h4>
                 {{ Form::open(array("url" => "/comment" , 'files' => true)) }}
+
+                <meta name="csrf-token" content="{{ csrf_token() }}" />
                 <!--<form action="{{ route('comment.store') }}">-->
                 <div class="form-group">
                     <div class="col-md-6 col-md-offset-0">
-                        <img src="{{Auth::user()->image}}"><input type="text" name="comment" id="comment" class="form-control">
+                        <!--<img src="{{Auth::user()->image}}">-->
+                        <textarea name="comment" id="active-comment" class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -42,7 +45,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-6 col-md-offset-0">
-                        <button type="submit" class="btn btn-primary">
+                        <button id="submit-comment"type="submit" class="btn btn-primary">
                             <i class="fa fa-btn fa-user"></i> Submit
                         </button>
                     </div>
@@ -51,22 +54,29 @@
             </div>
             <hr>
             <!-- Posted Comments -->
-<!--            @foreach($post->comments as $comment)
+            <span id='comments-hock'></span>
+            @foreach($post->comments as $comment)
             <div class="media">
                 <a class="pull-left" href="#">
                     <img class="media-object" src="{{$comment->commenter->image}}" alt="">
-                </a>
-                <div class="media-body">
+                </a>       
+                @can('update_comment',$comment)
+                <a href="javascript:void(0)" id="comment-editor-{{$comment->id}}"><span class="glyphicon glyphicon-pencil pull-right"></span></a>
+                @endcan
+                <div class="media-body-{{$comment->id}}">
                     <h4 class="media-heading">{{$comment->commenter->name}}
                         <small>{{date('F d, Y',strtotime($comment->created_at))}}</small>
                     </h4>
+                    <p id="comment-{{$comment->id}}" class="comment-string">
                     {{$comment->comment}}
+                    </p>
                 </div>
             </div>
+            <hr>
+            @endforeach
         </div>
-        @endforeach-->
+        <!-- /.row -->
     </div>
-    <!-- /.row -->
 </div>
 <!-- /.container -->
 @endsection

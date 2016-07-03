@@ -2,7 +2,7 @@
 @extends('layouts.app')
 @section('content')
 <style>
-   input , .control-label{
+   input ,textarea, .control-label{
         margin-top: 10px;
     }
 </style>
@@ -45,11 +45,11 @@
                     </div>
 
                     <div class="form-group{{ $errors->has('content') ? ' has-error' : '' }}">
-                        <label for="content" class="col-md-4 control-label">Username</label>
+                        <label for="content" class="col-md-4 control-label">{!! Form::label('Article Content') !!}</label>
 
                         <div class="col-md-6">
-                            <input id="content" type="textarea" class="form-control" name="content" value="{{ old('content') }}">
-
+                            <textarea class="form-control" name="content" value="{{ old('content') }}">
+                            </textarea>
                             @if ($errors->has('content'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('content') }}</strong>
