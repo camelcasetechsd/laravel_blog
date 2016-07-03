@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Illuminate\Auth\Access\Gate as Gate;
-use App\Post as Post;
-use App\User as User;
-use App\Comment as Comment;
+use App\Models\Post as Post;
+use App\Models\User as User;
+use App\Models\Comment as Comment;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller

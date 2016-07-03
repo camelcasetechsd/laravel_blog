@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -39,16 +39,16 @@ class Post extends Model
      */
     public function author()
     {
-        return $this->belongsTo('App\User', 'author_id');
+        return $this->belongsTo('App\Models\User', 'author_id');
     }
 
     /**
      * function to return post comments 
-     * @return App\Comment
+     * @return App\Models\Comment
      */
     public function comments()
     {
-        return $this->hasMany('App\Comment')->orderBy('created_at','desc');
+        return $this->hasMany('App\Models\Comment')->orderBy('created_at','desc');
     }
 
 }

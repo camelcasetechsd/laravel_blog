@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Comments;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-use App\User as User;
-use APP\Post as Post;
-use App\Comment as Comment;
+use App\Models\User as User;
+use App\Models\Post as Post;
+use App\Models\Comment as Comment;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth as Auth;
 
