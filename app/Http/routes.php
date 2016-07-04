@@ -50,3 +50,5 @@ Route::resource('article', 'Articles\ArticleController', array(
     'only' => array('index', 'show')
 ));
 
+Route::get('pdf/{id}', 'Articles\ArticleController@pdf');
+

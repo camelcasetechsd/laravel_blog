@@ -10,6 +10,10 @@ use App\Models\Post as Post;
 use App\Models\User as User;
 use App\Models\Comment as Comment;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+//use Barryvdh\DomPDF\PDF;
+use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\URL as URL;
 
 class ArticleController extends Controller
 {
@@ -69,6 +73,13 @@ class ArticleController extends Controller
         $post->content = $request->content;
         $post->image = $imagePath . $imageName;
         $post->save();
+
+        $user = Auth::user();
+//        Mail::send('mails.new_article', ['user' => $user], function ($m) use ($user) {
+//            $m->from('hello@app.com', 'Your Application');
+//
+//            $m->to($user->email, $user->name)->subject('Your Reminder!');
+//        });
         // redirect 
         return redirect()->route('article.index');
     }
@@ -120,6 +131,19 @@ class ArticleController extends Controller
     public function destroy($id)
     {
         
+    }
+
+    public function pdf($id)
+    {
+        $article = Post::find($id);
+        $pdf = PDF::loadView('download.pdf', array(
+            'title'=>$article->title,
+            'created_at'=>$article->created_at,
+            'author'=>$article->author->name,
+            'content'=>$article->content,
+            'image'=>URL::to('/').$article->image,
+        ));
+        return $pdf->download($article->title.'.pdf');
     }
 
 }
