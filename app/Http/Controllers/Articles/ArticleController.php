@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Articles;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\View;
 use App\Http\Requests;
+use App\Http\Requests\PostFormRequest;
 use Illuminate\Auth\Access\Gate as Gate;
 use App\Models\Post as Post;
 use App\Models\User as User;
@@ -47,31 +49,14 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostFormRequest $request)
     {
-        /**
-         * Validating article data
-         */
-        $this->validate($request, [
-            'title' => 'required|unique:posts|max:225',
-            'summary' => 'required',
-            'content' => 'required|max:1024',
-            'summary' => 'required',
-            'image' => 'required',
-        ]);
-
         $post = new Post();
-
-        $file = $request->image;
-        $imageName = bin2hex(random_bytes(10)) . '.' . $request->file('image')->getClientOriginalExtension();
-        $imagePath = '/images/articles/';
-        $containerPath = public_path() . $imagePath;
-        $file->move($containerPath, $imageName);
         $post->author_id = Auth::user()->id;
         $post->title = $request->title;
         $post->summary = $request->summary;
-        $post->content = $request->content;
-        $post->image = $imagePath . $imageName;
+        $post->body = $request->body;
+        $post->image = Post::uploadImage($request);
         $post->save();
 
         $user = Auth::user();
@@ -93,7 +78,7 @@ class ArticleController extends Controller
     public function show($id)
     {
 
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
         return view('articles.show', array(
             'post' => $post,
         ));
@@ -107,7 +92,8 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        
+        $article = Post::findOrFail($id);
+        return View::make('articles.create')->with(compact('article'));
     }
 
     /**
@@ -117,9 +103,17 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostFormRequest $request, $id)
     {
-        //
+        $article = Post::findOrFail($id);
+        $article->title = $request->title;
+        $article->summary = $request->summary;
+        $article->body = $request->body;
+        if (!is_null($request->image)) {
+            $article->image = Post::uploadImage($request);
+        }
+        $article->save();
+        return view('articles.show', array('post' => $article));
     }
 
     /**
@@ -135,15 +129,15 @@ class ArticleController extends Controller
 
     public function pdf($id)
     {
-        $article = Post::find($id);
+        $article = Post::findOrFail($id);
         $pdf = PDF::loadView('download.pdf', array(
-            'title'=>$article->title,
-            'created_at'=>$article->created_at,
-            'author'=>$article->author->name,
-            'content'=>$article->content,
-            'image'=>URL::to('/').$article->image,
+                    'title' => $article->title,
+                    'created_at' => $article->created_at,
+                    'author' => $article->author->name,
+                    'body' => $article->body,
+                    'image' => URL::to('/') . $article->image,
         ));
-        return $pdf->download($article->title.'.pdf');
+        return $pdf->download($article->title . '.pdf');
     }
 
 }
