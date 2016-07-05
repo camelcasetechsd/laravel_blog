@@ -22,8 +22,9 @@
 
             <hr>
             <!-- Post Content -->
-            {{$post->content}}
+            {{$post->body}}
             <hr>
+            <a href="/pdf/{{$post->id}}"><button class="btn btn-primary">Download Article</button></a>
             <!-- Blog Comments -->
             <!-- Comments Form -->
             <div class="row">

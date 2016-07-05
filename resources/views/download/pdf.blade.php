@@ -14,5 +14,5 @@
 <hr>
 
 <!-- Post Content -->
-{{$content}}
+{{$body}}
 

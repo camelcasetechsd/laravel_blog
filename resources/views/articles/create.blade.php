@@ -2,7 +2,7 @@
 @extends('layouts.app')
 @section('content')
 <style>
-   input ,textarea, .control-label{
+    input ,textarea, .control-label{
         margin-top: 10px;
     }
 </style>
@@ -12,15 +12,21 @@
             <div class="panel panel-default">
                 <div class="panel-heading">New Article</div>
                 <div class="panel-body">
-                    {{ Form::open(array("url" => "/article" , 'files' => true)) }}
-                    {{ csrf_field() }}
 
+                    @if(isset($article))
+                    {{ Form::model($article, ["method"=>"PATCH","route" => ["article.update",$article->id],'files' => true ]) }}
+                    @else
+                    {{ Form::open(["method"=>"POST","route" => "article.store",'files' => true]) }}
+                    @endif
+
+                    {{ csrf_field()}}
 
                     <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
                         <label for="title" class="col-md-4 control-label">{!! Form::label('Article Title') !!}</label>
 
                         <div class="col-md-6">
-                            <input id="title" type="text" class="form-control" name="title" value="{{ old('title') }}">
+                            <input id="title" type="text" class="form-control" name="title" value="{{ old('title',isset($article)?$article->title:'') }}">
+                            <!--{{Form::text('title','', array('class'=>'form-control'))}}-->
 
                             @if ($errors->has('title'))
                             <span class="help-block">
@@ -34,7 +40,7 @@
                         <label for="summary" class="col-md-4 control-label">{!! Form::label('Article Summary') !!}</label>
 
                         <div class="col-md-6">
-                            <input id="summary" type="text" class="form-control" name="summary" value="{{ old('summary') }}">
+                            <input id="summary" type="text" class="form-control" name="summary" value="{{ old('summary',isset($article)?$article->summary:'') }}">
 
                             @if ($errors->has('summary'))
                             <span class="help-block">
@@ -44,15 +50,17 @@
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('content') ? ' has-error' : '' }}">
-                        <label for="content" class="col-md-4 control-label">{!! Form::label('Article Content') !!}</label>
+                    <div class="form-group{{ $errors->has('body') ? ' has-error' : '' }}">
+                        <label for="body" class="col-md-4 control-label">{!! Form::label('Article Body') !!}</label>
 
                         <div class="col-md-6">
-                            <textarea class="form-control" name="content" value="{{ old('content') }}">
+                            <textarea id="body" class="form-control" name="body">
+                                {{ old('body',isset($article)?$article->body:'') }}
                             </textarea>
-                            @if ($errors->has('content'))
+
+                            @if ($errors->has('body'))
                             <span class="help-block">
-                                <strong>{{ $errors->first('content') }}</strong>
+                                <strong>{{ $errors->first('body') }}</strong>
                             </span>
                             @endif
                         </div>
@@ -63,7 +71,7 @@
 
                         <div class="col-md-6">
                             {!! Form::file('image', null) !!}
-                            
+
                             @if ($errors->has('image'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('image') }}</strong>

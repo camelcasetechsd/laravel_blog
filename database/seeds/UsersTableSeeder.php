@@ -17,25 +17,29 @@ class UsersTableSeeder extends Seeder
                 'username' => 'admin',
                 'name' => 'admin',
                 'email' => str_random(10) . '@gmail.com',
-                'password' => bcrypt('admin')
+                'password' => bcrypt('admin'),
+                'avatar' => 'default.png'
             ),
             array(
                 'username' => 'ahmed',
                 'name' => 'ahmed',
                 'email' => str_random(10) . '@gmail.com',
-                'password' => bcrypt('ahmed')
+                'password' => bcrypt('ahmed'),
+                'avatar' => 'default.png'
             ),
             array(
                 'username' => 'hazeem',
                 'name' => 'hazeem',
                 'email' => str_random(10) . '@gmail.com',
-                'password' => bcrypt('hazeem')
+                'password' => bcrypt('hazeem'),
+                'avatar' => 'default.png'
             ),
             array(
                 'username' => 'maged',
                 'name' => 'maged',
                 'email' => str_random(10) . '@gmail.com',
-                'password' => bcrypt('maged')
+                'password' => bcrypt('maged'),
+                'avatar' => 'default.png'
             ),
         );
 

@@ -28,7 +28,7 @@ class Post extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'summary', 'content',
+        'title', 'summary', 'body',
     ];
 
     /**
@@ -48,7 +48,17 @@ class Post extends Model
      */
     public function comments()
     {
-        return $this->hasMany('App\Models\Comment')->orderBy('created_at','desc');
+        return $this->hasMany('App\Models\Comment')->orderBy('created_at', 'desc');
+    }
+
+    public static function uploadImage($request)
+    {
+        $file = $request->image;
+        $imageName = bin2hex(random_bytes(10)) . '.' . $request->file('image')->getClientOriginalExtension();
+        $imagePath = '/images/articles/';
+        $containerPath = public_path() . $imagePath;
+        $file->move($containerPath, $imageName);
+        return $imagePath . $imageName;
     }
 
 }

@@ -42,8 +42,11 @@ Route::group(['middleware' => 'auth'], function() {
     ));
 
     Route::resource('comment', 'Comments\CommentsController', array(
-        'only' => array('store', 'update')
+        'only' => array('store', 'upodate')
     ));
+
+    Route::get('profile', 'Users\UserController@profile');
+    Route::post('profile', 'Users\UserController@updateImage');
 });
 
 Route::resource('article', 'Articles\ArticleController', array(

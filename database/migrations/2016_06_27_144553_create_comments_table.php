@@ -21,9 +21,9 @@ class CreateCommentsTable extends Migration
             $table->timestamps();
         });
     
-        Schema::create('comments', function (Blueprint $table) {
-            $table->integer('post_id')->references('id')->on('posts');
-            $table->integer('user_id')->references('id')->on('users');
+        Schema::table('comments', function (Blueprint $table) {
+            $table->foreign('post_id')->references('id')->on('posts');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

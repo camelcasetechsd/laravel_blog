@@ -17,9 +17,9 @@
                                 <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}">
 
                                 @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('name') }}</strong>
+                                </span>
                                 @endif
                             </div>
                         </div>
@@ -31,9 +31,9 @@
                                 <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}">
 
                                 @if ($errors->has('username'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('username') }}</strong>
-                                    </span>
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('username') }}</strong>
+                                </span>
                                 @endif
                             </div>
                         </div>
@@ -45,9 +45,9 @@
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
 
                                 @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
                                 @endif
                             </div>
                         </div>
@@ -59,9 +59,9 @@
                                 <input id="password" type="password" class="form-control" name="password">
 
                                 @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('password') }}</strong>
+                                </span>
                                 @endif
                             </div>
                         </div>
@@ -73,9 +73,23 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
 
                                 @if ($errors->has('password_confirmation'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
+                            <label for="image" class="col-md-4 control-label">Photo</label>
+
+                            <div class="col-md-6">
+                                {{Form::file('image')}}
+
+                                @if ($errors->has('image'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('image') }}</strong>
+                                </span>
                                 @endif
                             </div>
                         </div>
