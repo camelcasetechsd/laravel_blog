@@ -9,3 +9,5 @@ public/images/articles/
 /resources/assets/bower/
 /public/css/*
 /public/js/*
+/public/images/avatars/*
+!/public/images/avatars/default.png
