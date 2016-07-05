@@ -49,7 +49,7 @@ $(document).ready(function () {
 
 });
 
-function editComment$id 
+function editComment($id) 
 {
     
 }

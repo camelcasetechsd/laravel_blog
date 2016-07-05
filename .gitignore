@@ -6,3 +6,6 @@ Homestead.json
 .env
 public/images/articles/
 /nbproject/private/
+/resources/assets/bower/
+/public/css/*
+/public/js/*
