@@ -39,22 +39,17 @@ class DropTables extends Command
      */
     public function handle()
     {
-
         $colname = 'Tables_in_' . env('DB_DATABASE');
-
         $tables = DB::select('SHOW TABLES');
 
-//        var_dump($tables);exit;
         if (empty($tables)) {
-            exit('Database is already empty'.PHP_EOL);
+            exit('Database is already empty' . PHP_EOL);
         }
 
         foreach ($tables as $table) {
-
             $droplist[] = $table->$colname;
         }
         $droplist = implode(',', $droplist);
-
         DB::beginTransaction();
         //turn off referential integrity
         //DB::statement('SET FOREIGN_KEY_CHECKS = 0');
@@ -62,8 +57,7 @@ class DropTables extends Command
         //turn referential integrity back on
         //DB::statement('SET FOREIGN_KEY_CHECKS = 1');
         DB::commit();
-
-        $this->comment(PHP_EOL . "If no errors showed up, all tables were dropped" . PHP_EOL);
+        $this->comment("All tables were dropped successfully!");
     }
 
 }
