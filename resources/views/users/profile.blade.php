@@ -8,7 +8,12 @@
         <h2>{{$user->name}}'s Profile</h2>
         <form enctype="multipart/form-data" method="POST" action="">
             {{ csrf_field()}}
-            <input type="file"  class="form-control" name="avatar">
+            <input type="file"  class="form-control" name="image">
+            @if ($errors->has('image'))
+            <span class="alert-danger help-block">
+                <strong>{{ $errors->first('image') }}</strong>
+            </span>
+            @endif
             <input type="submit" class="btn btn-primary" value="upload">
         </form>
     </div>
