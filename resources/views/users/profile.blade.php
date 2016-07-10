@@ -7,6 +7,7 @@
     <div class="col-lg-6">
         <h2>{{$user->name}}'s Profile</h2>
         <form enctype="multipart/form-data" method="POST" action="">
+            {{ csrf_field()}}
             <input type="file"  class="form-control" name="avatar">
             <input type="submit" class="btn btn-primary" value="upload">
         </form>

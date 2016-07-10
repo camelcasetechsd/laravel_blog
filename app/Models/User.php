@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Utilities\UploadDirs;
 
 class User extends Authenticatable
 {
@@ -26,6 +27,18 @@ class User extends Authenticatable
     ];
 
     /**
+     * Imageuploader calss 
+     * @var App\Models\ImageUploader 
+     */
+    protected $imageUploader;
+
+    public function __construct(array $attributes = array())
+    {
+        parent::__construct($attributes);
+        $this->imageUploader = app()->make('App\Models\ImageUploader');
+    }
+
+    /**
      * function returns user's posts
      * @param string $related Model Name
      * @return type
@@ -42,6 +55,11 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany('App\Models\Comment');
+    }
+
+    public function updateUserImage($request)
+    {
+        return $this->imageUploader->upload($request, UploadDirs::AVATARS_DIR);
     }
 
 }

@@ -33,16 +33,16 @@ class PostFormRequest extends Request
                 }
             case 'POST': {
                     return [
-                        'title' => 'required|unique:posts|max:225',
+                        'title' => 'required|unique:posts,title|max:225',
                         'summary' => 'required',
                         'body' => 'required|max:1024',
-                        'image' => 'required',
+                        'image' => 'required|mimes:png,jpg,jpeg',
                     ];
                 }
             case 'PUT':
             case 'PATCH': {
                     return [
-                        'title' => 'required|unique:posts|max:225',
+                        'title' => 'required|max:225|unique:posts,title,' . $this->request->get('id'),
                         'summary' => 'required',
                         'body' => 'required|max:1024',
                             // image ignored in update

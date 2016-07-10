@@ -56,7 +56,7 @@ class ArticleController extends Controller
         $post->title = $request->title;
         $post->summary = $request->summary;
         $post->body = $request->body;
-        $post->image = Post::uploadImage($request);
+        $post->image = $post->uploadImage($request);
         $post->save();
 
         $user = Auth::user();
@@ -106,13 +106,15 @@ class ArticleController extends Controller
     public function update(PostFormRequest $request, $id)
     {
         $article = Post::findOrFail($id);
+        $post = new Post();
         $article->title = $request->title;
         $article->summary = $request->summary;
         $article->body = $request->body;
         if (!is_null($request->image)) {
-            $article->image = Post::uploadImage($request);
+            $article->image = $post->uploadImage($request);
         }
         $article->save();
+
         return view('articles.show', array('post' => $article));
     }
 

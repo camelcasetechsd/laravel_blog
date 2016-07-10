@@ -79,6 +79,9 @@
                             @endif
                         </div>
                     </div>
+                    @if(isset($article))
+                    <input type="text" name="id" value="{{old('id',$article->id)}}">
+                    @endif
 
                     <div class="form-group">
                         <div class="col-md-6 col-md-offset-4">
