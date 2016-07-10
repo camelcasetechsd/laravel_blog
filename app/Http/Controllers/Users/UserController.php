@@ -17,9 +17,12 @@ class UserController extends Controller
             'user' => $user
         ));
     }
-    
-    public function updateImage(){
-        
+
+    public function updateImage(Requests\Request $request)
+    {
+        $user = Auth::user();
+        $user->avatar = $user->updateUserImage($request);
+        $user->save();
     }
 
 }

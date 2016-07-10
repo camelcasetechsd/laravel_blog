@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Utilities\UploadDirs;
 
 class Post extends Model
 {
@@ -32,6 +33,18 @@ class Post extends Model
     ];
 
     /**
+     * Imageuploader calss 
+     * @var App\Models\ImageUploader 
+     */
+    protected $imageUploader;
+
+    public function __construct(array $attributes = array())
+    {
+        parent::__construct($attributes);
+        $this->imageUploader = app()->make('App\Models\ImageUploader');
+    }
+
+    /**
      * to get user from post
      * @param string $related Model name 
      * @param string $foreignKey foreign key flag 
@@ -51,14 +64,9 @@ class Post extends Model
         return $this->hasMany('App\Models\Comment')->orderBy('created_at', 'desc');
     }
 
-    public static function uploadImage($request)
+    public function uploadImage($request)
     {
-        $file = $request->image;
-        $imageName = bin2hex(random_bytes(10)) . '.' . $request->file('image')->getClientOriginalExtension();
-        $imagePath = '/images/articles/';
-        $containerPath = public_path() . $imagePath;
-        $file->move($containerPath, $imageName);
-        return $imagePath . $imageName;
+        return $this->imageUploader->upload($request, UploadDirs::ARTICLES_DIR);
     }
 
 }
