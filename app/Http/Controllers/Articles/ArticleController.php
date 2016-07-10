@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Mail;
 //use Barryvdh\DomPDF\PDF;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\URL as URL;
+use App\Utilities\Settings;
+use App\Utilities\Mails\MailSubjects;
+use App\Utilities\Mails\MailTemplates;
 
 class ArticleController extends Controller
 {
@@ -60,11 +63,18 @@ class ArticleController extends Controller
         $post->save();
 
         $user = Auth::user();
-//        Mail::send('mails.new_article', ['user' => $user], function ($m) use ($user) {
-//            $m->from('hello@app.com', 'Your Application');
-//
-//            $m->to($user->email, $user->name)->subject('Your Reminder!');
-//        });
+
+        try {
+            Mail::send(MailTemplates::ARTICLE_CREATION, ['user' => $user], function ($m) use ($user) {
+                $m->from(Settings::SYSTEM_EMAIL, 'Blog-Notification');
+                $m->to($user->mail, $user->name)->subject(MailSubjects::ARTICLE_CREATION);
+            });
+        } catch (Exception $e) {
+            $request->session()->flash('status-fail', 'Something went wrong!');
+            return redirect()->route('article.index');
+        }
+    
+        $request->session()->flash('status-success', 'Created Successfully!');
         // redirect 
         return redirect()->route('article.index');
     }

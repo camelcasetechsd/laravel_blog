@@ -1,1 +1,1 @@
-Congratulations
+Congratulations ... your article has been created successfully

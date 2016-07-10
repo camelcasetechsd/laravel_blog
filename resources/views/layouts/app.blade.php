@@ -71,7 +71,16 @@
                 </div>
             </div>
         </nav>
-
+        @if(Session::has('status-success'))
+        <div class="alert alert-success">
+            {{Session::get('status-success')}}
+        </div>
+        @elseif(Session::has('status-fail'))
+        <div class="alert alert-danger">
+            {{Session::get('status-fail')}}
+        </div>
+        @endif
+        
         @yield('content')
 
 
