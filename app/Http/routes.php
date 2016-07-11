@@ -37,12 +37,9 @@ Route::group(['middleware' => 'auth'], function() {
      * Article Create & Store & Update routes need authentication
      * Articles Index & Show are for Guests    
      */
-//    Route::group(['middleware' => 'article'], function() {
     Route::resource('article', 'Articles\ArticleController', array(
         'only' => array('create', 'store', 'edit', 'update', 'destroy')
     ));
-//    });
-
 
     Route::resource('comment', 'Comments\CommentsController', array(
         'only' => array('store', 'update')

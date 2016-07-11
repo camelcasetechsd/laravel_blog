@@ -2,18 +2,12 @@
 
 namespace App\Http\Controllers\Articles;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
-use App\Http\Requests;
 use App\Http\Requests\PostFormRequest;
-use Illuminate\Auth\Access\Gate as Gate;
 use App\Models\Post as Post;
-use App\Models\User as User;
-use App\Models\Comment as Comment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-//use Barryvdh\DomPDF\PDF;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\URL as URL;
 use App\Utilities\Settings;

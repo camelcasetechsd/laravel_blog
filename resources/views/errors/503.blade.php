@@ -1,47 +1,23 @@
-<!DOCTYPE html>
 <html>
     <head>
-        <title>Be right back.</title>
-
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-
-        <style>
-            html, body {
-                height: 100%;
-            }
-
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                color: #B0BEC5;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato';
-            }
-
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
-
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
-
-            .title {
-                font-size: 72px;
-                margin-bottom: 40px;
-            }
-        </style>
+        <title>404</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link href='//fonts.googleapis.com/css?family=Condiment' rel='stylesheet' type='text/css'>
     </head>
     <body>
-        <div class="container">
-            <div class="content">
-                <div class="title">Be right back.</div>
+
+        <div class="wrap">
+            <div class="main">
+                <!---728x90--->
+                <center>
+                    <div class="banner">
+                        <img src="/images/app/banner.png" alt="" />
+                    </div>
+                    <!---728x90--->
+                    <div class="text">
+                        <h1>The requested url was not found !...</h1>
+                    </div>
+                </center>
             </div>
-        </div>
     </body>
 </html>
