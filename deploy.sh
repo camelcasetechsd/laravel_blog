@@ -11,4 +11,5 @@ bower install
 gulp
 #preparing DB
 php artisan droptables
+php artisan migrate
 php artisan migrate --seed

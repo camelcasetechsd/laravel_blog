@@ -43,10 +43,11 @@ class UsersTableSeeder extends Seeder
             ),
         );
 
-        foreach ($users as $user)
-        {
+        foreach ($users as $user) {
             DB::table('users')->insert($user);
         }
+
+        $this->command->info('User table has been seeded!');
     }
 
 }

@@ -46,7 +46,9 @@
                         <li><a href="{{ url('/home') }}">Home</a></li>
                         <li><a href="{{ url('/article') }}">Feed</a></li>
                         <li><a href="{{ url('/article/create') }}">New Article</a></li>
+                        @if(App::environment() === 'testing')
                         <li><a href="{{ url('/article/1') }}">article one</a></li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->

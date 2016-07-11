@@ -9,8 +9,7 @@ class DatabaseSeeder extends Seeder
     {
         //seeding user table
         $this->call('UsersTableSeeder');
-        $this->command->info('User table seeded!');
-
-        }
+        $this->call('PostsTableSeeder');
+    }
 
 }
