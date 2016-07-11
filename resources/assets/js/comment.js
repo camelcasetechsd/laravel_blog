@@ -31,9 +31,10 @@ $(document).ready(function () {
             }
         }).done(function ($data) {
             // comment block
-            $commentDiv = '<div class="media"> <a class="pull-left" href="#"> <img class="media-object" src="' + $data.img + '" alt=""> </a> <div class="media-body"> <h4 class="media-heading">' + $data.name + '<small>' + $data.date + '</small> </h4> ' + $commentVal + ' </div> </div>'
+            $commentDiv = '<div class="media row"> <div class="col-lg-12"> <h4 class="media-heading"> ' + $data.name + '<small> ' + $data.date + '</small> &nbsp;&nbsp;&nbsp; <a href="javascript:void(0)" id="comment-editor"><span class="glyphicon glyphicon-pencil"></span></a></h4> </div> <div class="col-lg-1"> <a class="pull-left" href="#"> <img class="media-object" width="50px" height="50px" src="' + $data.avatar + '" alt=""> </a> </div> <div class="col-lg-8"> <div class="media-body"> <p id="comment" class="comment-string"> ' + $commentVal + '</p> </div> </div> </div> <hr>'
             $('#comments-hock').after($commentDiv);
             $('#active-comment').val('');
+            $('#submit-comment').prop('disabled', true);
         });
     });
 
@@ -41,15 +42,15 @@ $(document).ready(function () {
     /**
      * real-time comment editing 
      */
-    $('#comment-editor').click(function(){
-        
+    $('#comment-editor').click(function () {
+
     });
 
 
 
 });
 
-function editComment($id) 
+function editComment($id)
 {
-    
+
 }

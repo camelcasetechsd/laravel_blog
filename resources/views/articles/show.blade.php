@@ -28,56 +28,69 @@
             <!-- Blog Comments -->
             <!-- Comments Form -->
             <div class="row">
+                @if(Auth::user())
                 <h4>Leave a Comment:</h4>
                 {{ Form::open(array("url" => "/comment" , 'files' => true)) }}
-
                 <meta name="csrf-token" content="{{ csrf_token() }}" />
-                <!--<form action="{{ route('comment.store') }}">-->
                 <div class="form-group">
+                    <div class="col-md-1 col-md-offset-0">
+                        <img  width="50px" height="50px" src="{{Auth::user()->avatar}}">
+                    </div>
                     <div class="col-md-6 col-md-offset-0">
-                        <!--<img src="{{Auth::user()->image}}">-->
                         <textarea name="comment" id="active-comment" class="form-control"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-6 col-md-offset-0">
+                    <div class="col-md-5 col-md-offset-0">
                         <input type="hidden" name="postId" id="postId" class="form-control" value="{{$post->id}}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-6 col-md-offset-0">
                         <button id="submit-comment"type="submit" class="btn btn-primary">
                             <i class="fa fa-btn fa-user"></i> Submit
                         </button>
                     </div>
                 </div>
-                {{ Form::close() }}        
             </div>
-            <hr>
-            <!-- Posted Comments -->
-            <span id='comments-hock'></span>
-            @foreach($post->comments as $comment)
-            <div class="media">
+
+            {{ Form::close() }}        
+        </div>
+        @else
+        <p>To comment please click on link to <a href="/login">log in</a></p>
+        @endif
+    </div>
+    <hr>
+    <div class="row">
+        <!-- Posted Comments -->
+        <span id='comments-hock'></span>
+        @foreach($post->comments as $comment)
+        <div class="media row">
+            <div class="col-lg-12">
+                <h4 class="media-heading">{{$comment->commenter->name}}
+                    <small>{{date('F d, Y',strtotime($comment->created_at))}}</small>
+                    &nbsp;&nbsp;&nbsp;
+                    @can('update_comment',$comment)
+                    <a href="javascript:void(0)" id="comment-editor-{{$comment->id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    @endcan
+                </h4>
+            </div>
+            <div class="col-lg-1">
                 <a class="pull-left" href="#">
-                    <img class="media-object" src="{{$comment->commenter->image}}" alt="">
-                </a>       
-                @can('update_comment',$comment)
-                <a href="javascript:void(0)" id="comment-editor-{{$comment->id}}"><span class="glyphicon glyphicon-pencil pull-right"></span></a>
-                @endcan
+                    <img class="media-object" width="50px" height="50px" src="{{$comment->commenter->avatar}}" alt="">
+                </a>
+            </div>
+            <div class="col-lg-8">
                 <div class="media-body-{{$comment->id}}">
-                    <h4 class="media-heading">{{$comment->commenter->name}}
-                        <small>{{date('F d, Y',strtotime($comment->created_at))}}</small>
-                    </h4>
                     <p id="comment-{{$comment->id}}" class="comment-string">
-                    {{$comment->comment}}
+                        {{$comment->comment}}
                     </p>
                 </div>
+
             </div>
-            <hr>
-            @endforeach
         </div>
-        <!-- /.row -->
+        <hr>
+        @endforeach
     </div>
+</div>
+<!-- /.row -->
+</div>
 </div>
 <!-- /.container -->
 @endsection

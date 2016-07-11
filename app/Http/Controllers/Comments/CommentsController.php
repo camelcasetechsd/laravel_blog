@@ -43,6 +43,7 @@ class CommentsController extends Controller
     public function store(Request $request)
     {
         if ($request->ajax()) {
+     
             $data = Input::all();
             $comment = new Comment();
             $comment->comment = $data['comment'];
@@ -52,7 +53,7 @@ class CommentsController extends Controller
 
             return response()->json([
                         'name' => Auth::user()->name,
-//                        'image' => Auth::user()->image,
+                        'avatar' => Auth::user()->avatar,
                         'date' => date('F d, Y', strtotime($comment->created_at)),
                         'status' => 'true'
             ]);

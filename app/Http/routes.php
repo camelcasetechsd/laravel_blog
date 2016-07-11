@@ -42,7 +42,7 @@ Route::group(['middleware' => 'auth'], function() {
     ));
 
     Route::resource('comment', 'Comments\CommentsController', array(
-        'only' => array('store', 'upodate')
+        'only' => array('store', 'update')
     ));
 
     Route::get('profile', 'Users\UserController@profile');
