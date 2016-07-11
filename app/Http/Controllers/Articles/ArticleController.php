@@ -22,6 +22,16 @@ use App\Utilities\Mails\MailTemplates;
 
 class ArticleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('article', array(
+            'only'=>array(
+                'edit',
+                'update'
+            )
+        ));
+    }
+        
 
     /**
      * Display a listing of the resource.
