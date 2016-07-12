@@ -9,7 +9,19 @@ bower install
 
 #preparing scripts & style-sheets
 gulp
+
 #preparing DB
 php artisan droptables
+
+#adding jobs migration class
+php artisan queue:table
+
+# migrating table classes
 php artisan migrate
+
+#seeding tables 
 php artisan migrate --seed
+
+#registering jobs to jobs table
+./jobs.sh
+

@@ -15,6 +15,7 @@ use App\Utilities\Mails\MailSubjects;
 use App\Utilities\Mails\MailTemplates;
 use Illuminate\Support\Facades\Event;
 use App\Events\ArticleCreateEvent;
+use App\Jobs\GoodMorningMail;
 
 class ArticleController extends Controller
 {
@@ -36,7 +37,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Post::orderBy('created_at', 'desc')->paginate(10);
+        $articles = Post::orderBy('created_at', 'desc')->paginate(10);        
         return view('articles.index', array(
             'articles' => $articles
         ));

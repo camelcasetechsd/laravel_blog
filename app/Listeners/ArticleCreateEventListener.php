@@ -10,9 +10,10 @@ use App\Utilities\Mails\MailTemplates;
 use App\Utilities\Mails\MailSubjects;
 use App\Utilities\Settings;
 
-class ArticleCreateEventListener
+class ArticleCreateEventListener implements ShouldQueue
 {
-
+    // use this trait to manage Job Queues manually
+//    use InteractsWithQueue;
     /**
      * Create the event listener.
      *
@@ -24,7 +25,8 @@ class ArticleCreateEventListener
     }
 
     /**
-     * Handle the event.
+     * Handle the Create Article event and this job should be deleted 
+     * by default if no exceptions happened.
      *
      * @param  ArticleCreateEvent  $event
      * @return void
@@ -38,5 +40,4 @@ class ArticleCreateEventListener
             $m->to($author->email, $author->name)->subject(MailSubjects::ARTICLE_CREATION);
         });
     }
-
 }
