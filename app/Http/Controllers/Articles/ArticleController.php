@@ -13,19 +13,21 @@ use Illuminate\Support\Facades\URL as URL;
 use App\Utilities\Settings;
 use App\Utilities\Mails\MailSubjects;
 use App\Utilities\Mails\MailTemplates;
+use Illuminate\Support\Facades\Event;
+use App\Events\ArticleCreateEvent;
 
 class ArticleController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('article', array(
-            'only'=>array(
+            'only' => array(
                 'edit',
                 'update'
             )
         ));
     }
-        
 
     /**
      * Display a listing of the resource.
@@ -65,19 +67,12 @@ class ArticleController extends Controller
         $post->body = $request->body;
         $post->image = $post->uploadImage($request);
         $post->save();
-
-        $user = Auth::user();
-
-        try {
-            Mail::send(MailTemplates::ARTICLE_CREATION, ['user' => $user], function ($m) use ($user) {
-                $m->from(Settings::SYSTEM_EMAIL, 'Blog-Notification');
-                $m->to($user->mail, $user->name)->subject(MailSubjects::ARTICLE_CREATION);
-            });
-        } catch (Exception $e) {
-            $request->session()->flash('status-fail', 'Something went wrong!');
-            return redirect()->route('article.index');
-        }
-    
+        /**
+         *  firing Article Creation Event which sends a welcome mail
+         *  Used as Event to be able to ignore it while tesing with phpunit
+         */
+        Event::fire(new ArticleCreateEvent($post));
+        // falsh message
         $request->session()->flash('status-success', 'Created Successfully!');
         // redirect 
         return redirect()->route('article.index');
