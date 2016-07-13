@@ -11,3 +11,4 @@ public/images/articles/
 /public/js/*
 /public/images/avatars/*
 !/public/images/avatars/default.png
+/public/fonts/

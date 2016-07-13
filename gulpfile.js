@@ -10,25 +10,36 @@ var elixir = require('laravel-elixir');
  |
  */
 
-elixir(function (mix) {
-   /**
-	* All types starts reading from /resources/assets/
-    */
-   mix.sass('app.scss');
 
-   mix.scripts([
-       
-       '../bower/jquery/dist/jquery.min.js',
-       '../bower/bootstrap/dist/js/bootstrap.min.js',
-       'app.js',
-       'comment.js'
-       ]);
+var paths = {
+    'jquery': './vendor/bower_components/jquery/',
+    'bootstrap': './vendor/bower_components/bootstrap-sass/assets/'
+}
 
-   mix.styles([
-       '../bower/bootstrap/dist/css/bootstrap.min.css',
-       '../bower/bootstrap/dist/css/bootstrap.min.css.map',
-       '../bower/bootstrap/fonts/*',
-       'styles.css'
-       ]);
+elixir(function(mix) {
+
+    mix.sass([
+     'app.scss'
+      ], './public/css/app.css');
+
+    //style sheets (array , output , option)
+    mix.styles([
+           paths.bootstrap + '../../bootstrap/dist/css/',
+           'styles.css'
+           ],'public/css/app.css');
+
+
+
+    // not planning to edit but just move
+    mix.copy(paths.bootstrap + 'fonts/bootstrap/**', 'public/fonts');
+
+    mix.scripts([
+            paths.jquery + "dist/jquery.js",
+            paths.bootstrap + "javascripts/bootstrap.js",
+            'app.js',
+            'comment.js'
+        ], './public/js/app.js');
 
 });
+
+
