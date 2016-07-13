@@ -1,6 +1,4 @@
 var elixir = require('laravel-elixir');
-
-var vendorDir = 'vendor/';
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -29,14 +27,8 @@ elixir(function (mix) {
    mix.styles([
        '../bower/bootstrap/dist/css/bootstrap.min.css',
        '../bower/bootstrap/dist/css/bootstrap.min.css.map',
+       '../bower/bootstrap/fonts/*',
        'styles.css'
        ]);
-//            .copy(nodeDir + 'font-awesome/fonts', 'public/fonts')
-//            .copy(nodeDir + 'bootstrap/fonts', 'public/fonts');
-//
-
-//    mix.styles([
-//       vendorDir+'twbs/dist/css/bootstrap.min.css' 
-//    ]);
 
 });

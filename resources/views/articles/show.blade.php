@@ -67,7 +67,7 @@
                     <small>{{date('F d, Y',strtotime($comment->created_at))}}</small>
                     &nbsp;&nbsp;&nbsp;
                     @can('update_comment',$comment)
-                    <a href="javascript:void(0)" id="comment-editor-{{$comment->id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a href="javascript:void(0)" class="comment-editor"><span class="glyphicon glyphicon-pencil"></span></a>
                     @endcan
                 </h4>
             </div>
@@ -77,8 +77,8 @@
                 </a>
             </div>
             <div class="col-lg-8">
-                <div class="media-body-{{$comment->id}}">
-                    <p id="comment-{{$comment->id}}" class="comment-string">
+                <div class="media-body">
+                    <p class="comment-string">
                         {{$comment->comment}}
                     </p>
                 </div>

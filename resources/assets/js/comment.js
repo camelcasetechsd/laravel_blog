@@ -39,13 +39,18 @@ $(document).ready(function () {
     });
 
 
-    /**
-     * real-time comment editing 
-     */
-    $('#comment-editor').click(function () {
+//    /**
+//     * real-time comment editing 
+//     */
+//    $('#comment-editor').click(function () {
+//
+//    });
 
+
+    $(document).on('click','#comment-editor',function(){
+        $commentP = $(this).find('.comment-string');
+        console.log($commentP);
     });
-
 
 
 });
