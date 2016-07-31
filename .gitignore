@@ -1,8 +1,8 @@
 /vendor
 /node_modules
 /public/storage
-Homestead.yaml
 Homestead.json
+Homestead.yaml
 .env
 public/images/articles/
 /nbproject/private/
@@ -12,3 +12,4 @@ public/images/articles/
 /public/images/avatars/*
 !/public/images/avatars/default.png
 /public/fonts/
+.vagrant
