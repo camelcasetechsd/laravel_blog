@@ -14,14 +14,11 @@ gulp
 php artisan droptables
 
 #adding jobs migration class
-php artisan queue:table
+#php artisan queue:table
 
 # migrating table classes
 php artisan migrate
 
 #seeding tables 
 php artisan migrate --seed
-
-#registering jobs to jobs table
-./jobs.sh
 
