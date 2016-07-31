@@ -1,0 +1,37 @@
+---
+ip: "192.168.10.10"
+memory: 2048
+cpus: 1
+hostname: laravel-blog
+name: laravel-blog
+provider: virtualbox
+version: "0.4.4"
+
+authorize: ~/.ssh/id_rsa.pub
+
+keys:
+    - ~/.ssh/id_rsa
+
+folders:
+    - map: "/media/adham/Number 2/Projects/laravel_blog"
+      to: "/home/vagrant/laravel-blog"
+
+sites:
+    - map: "laravel-blog.app"
+      to: "/home/vagrant/laravel-blog/public"
+
+databases:
+    - homestead
+
+# blackfire:
+#     - id: foo
+#       token: bar
+#       client-id: foo
+#       client-token: bar
+
+# ports:
+#     - send: 50000
+#       to: 5000
+#     - send: 7777
+#       to: 777
+#       protocol: udp
