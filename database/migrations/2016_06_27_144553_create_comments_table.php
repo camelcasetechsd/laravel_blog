@@ -20,7 +20,7 @@ class CreateCommentsTable extends Migration
             $table->string('comment');
             $table->timestamps();
         });
-    
+
         Schema::table('comments', function (Blueprint $table) {
             $table->foreign('post_id')->references('id')->on('posts');
             $table->foreign('user_id')->references('id')->on('users');
@@ -34,6 +34,19 @@ class CreateCommentsTable extends Migration
      */
     public function down()
     {
+        Schema::table('comments', function (Blueprint $table) {
+            /** 
+             * To drop a foreign key prefrence you should pass a string paramter to the method
+             * contains "<tablename>_<foreignKeyName>_foreign"
+             * or just pass an array contains only "<foreignKeyName>" and it will understand
+             * and replace it with the right value   
+             */
+            $table->dropForeign(['user_id']);
+            $table->dropColumn('user_id');
+            $table->dropForeign(['post_id']);
+            $table->dropColumn('post_id');
+        });
+
         Schema::drop('comments');
     }
 
