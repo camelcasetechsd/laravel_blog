@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Models\Post;
+use App\Utilities\UploadDirs;
+use Illuminate\Support\Facades\Input;
+
 class AuthController extends Controller
 {
     /*
@@ -76,10 +79,20 @@ use AuthenticatesAndRegistersUsers,
     protected function validator(array $data)
     {
         return Validator::make($data, [
+//validators
                     'username' => 'required|max:255|unique:users',
                     'name' => 'required|max:255',
                     'email' => 'required|email|max:255|unique:users',
                     'password' => 'required|min:6|confirmed',
+                    'dob' => 'date',
+                    'city' => 'required|max:20',
+                    'telephone' => 'required|min:7|max:20',
+                    'address' => 'required|min:20|max:255',
+                    'avatar' => 'mimes:jpg,gif,jpeg,png|size:5000',
+                        ], [
+// messages
+                    'mimes' => 'your :attribute \'s extension should be jpg,gif,jpeg,png',
+                    'size' => 'Image must not exceed 5 MB'
         ]);
     }
 
@@ -91,11 +104,28 @@ use AuthenticatesAndRegistersUsers,
      */
     protected function create(array $data)
     {
+        $uploadProcess = function () {
+            if (!is_null(Input::get('image'))) {
+                $request = app('request');
+                $imageUploader = app()->make('App\Models\ImageUploader');
+                return $imageUploader->upload($request, UploadDirs::AVATARS_DIR);
+            }
+            else {
+                $user = app()->make('App\Models\User');
+                return UploadDirs::AVATARS_DIR . $user::DEFAULT_USER_IMAGE;
+            }
+        };
+
         return User::create([
                     'username' => $data['username'],
                     'name' => $data['name'],
                     'email' => $data['email'],
                     'password' => bcrypt($data['password']),
+                    'dob' => $data['dob'],
+                    'city' => $data['city'],
+                    'telephone' => $data['telephone'],
+                    'address' => $data['address'],
+                    'avatar' => $uploadProcess()
         ]);
     }
 

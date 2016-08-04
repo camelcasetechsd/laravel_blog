@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Register</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -80,11 +80,63 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
+                            <label for="city" class="col-md-4 control-label">City</label>
+
+                            <div class="col-md-6">
+                                <input id="city" type="text" class="form-control" name="city" value="{{ old('city') }}">
+
+                                @if ($errors->has('city'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('city') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
+                            <label for="address" class="col-md-4 control-label">address</label>
+
+                            <div class="col-md-6">
+                                <input id="address" type="text" class="form-control" name="address" value="{{ old('address') }}">
+
+                                @if ($errors->has('address'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('address') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('telephone') ? ' has-error' : '' }}">
+                            <label for="telephone" class="col-md-4 control-label">Telephone</label>
+
+                            <div class="col-md-6">
+                                <input id="telephone" type="number" class="form-control" name="telephone" value="{{ old('telephone') }}">
+
+                                @if ($errors->has('telephone'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('telephone') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('dob') ? ' has-error' : '' }}">
+                            <label for="dob" class="col-md-4 control-label">Date of Birth</label>
+
+                            <div class="col-md-6">
+                                <input id="dob" type="date" class="form-control" name="dob" value="{{ old('dob') }}">
+
+                                @if ($errors->has('dob'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('dob') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
                         <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
                             <label for="image" class="col-md-4 control-label">Photo</label>
 
                             <div class="col-md-6">
-                                {{Form::file('image')}}
+                                <input type="file" name="image" id="image">
 
                                 @if ($errors->has('image'))
                                 <span class="help-block">

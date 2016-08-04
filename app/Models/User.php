@@ -8,13 +8,15 @@ use App\Utilities\UploadDirs;
 class User extends Authenticatable
 {
 
+    const DEFAULT_USER_IMAGE = 'default.png';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password', 'avatar'
+        'name', 'username', 'email', 'password', 'avatar', 'address', 'city', 'telephone', 'dob'
     ];
 
     /**
