@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
-{
+class User extends Authenticatable {
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,4 +23,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    public function Posts() {
+        return $this->hasMany('App\Model\Post', 'owner_id');
+    }
+
+    public function Comments() {
+        return $this->hasMany('App\Model\Comment', 'owner_id');
+    }
+
 }
