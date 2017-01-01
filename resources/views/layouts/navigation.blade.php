@@ -30,6 +30,9 @@
                 <li>
                     <a href="{{route('my-profile')}}">profile</a>
                 </li>
+                <li>
+                    <a href="{{ url('/logout') }}">logout</a>
+                </li>
                 @else
                 <li>
                     <a href="{{URL::to('register')}}">Sign up</a>

@@ -48,6 +48,6 @@
     </div>
 </div>
 <div class="col-sm-2">
-    <a href="{{route('update-password')}}" class="btn btn-success ">Change password</a>
+    <a href="{{route('update-password')}}" class="btn btn-success ">Change Login Credentials</a>
 </div>
 @endsection

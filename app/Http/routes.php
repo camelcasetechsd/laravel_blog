@@ -23,6 +23,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/posts/update/{id}', ['as' => 'post-update', 'uses' => 'PostsController@edit']);
     Route::post('/posts/update/{id}', ['as' => 'post-update', 'uses' => 'PostsController@update']);
     Route::post('/comments/create', ['as' => 'comment-create', 'uses' => 'CommentsController@store']);
+    Route::get('/comments/update/{id}', ['as' => 'comment-update', 'uses' => 'CommentsController@edit']);
+    Route::post('/comments/update/{id}', ['as' => 'comment-update', 'uses' => 'CommentsController@update']);
     Route::get('profile',['as' => 'my-profile','uses' => 'UsersController@profile']);
     Route::get('users',['as' => 'show-users','uses' => 'UsersController@show_users']);
     Route::get('user/{id}',['as' => 'get-user-profile','uses' => 'UsersController@get_user_profile']);

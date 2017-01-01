@@ -53,6 +53,7 @@
     <!-- Comment -->
     @foreach($post->Comments as $comment)
     <div class="media">
+        <div class="col-sm-8">
         <a class="pull-left" href="#">
             <img class="media-object" src="http://placehold.it/64x64" alt="">
         </a>
@@ -61,6 +62,10 @@
                 <small>{{$comment->created_at}}</small>
             </h4>
             {{$comment->content}}
+        </div>
+        </div>
+        <div class="col-sm4">
+        <a href="{{route('comment-update',$comment->id)}}">Edit</a>
         </div>
     </div>
     @endforeach
