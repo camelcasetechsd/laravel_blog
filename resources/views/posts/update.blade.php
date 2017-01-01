@@ -12,22 +12,30 @@
 @if(Session::has('message'))
 {!!Session::get('message')!!}
 @endif
-<form class="form-horizontal" action="{{route('post-create')}}" method="post"  enctype="multipart/form-data">
+<form class="form-horizontal" action="{{route('post-update',$post->id)}}" method="post"  enctype="multipart/form-data">
     {{ csrf_field() }}
     <div class="form-group">
         <label for="title" class="col-sm-2 control-label">Title</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" id="title" placeholder="title" name="title">
+            <input type="text" class="form-control" id="title" value="{{$post->title or ''}}" name="title">
         </div>
     </div>
     <div class="form-group">
         <label for="content" class="col-sm-2 control-label">content</label>
         <div class="col-sm-6">
-            <textarea class="form-control" rows="10" cols="20" name="content"></textarea>
+            <textarea class="form-control" rows="10" cols="20" name="content">{{$post->content or ''}}</textarea>
         </div>
     </div>
+    @if($post->image)
     <div class="form-group">
-        <label for="image" class="col-sm-2 control-label">Title</label>
+        <label for="image" class="col-sm-2 control-label"></label>
+        <div class="col-sm-6">
+            <img class="img-responsive" src="{{asset('postspics/'.$post->image)}}" alt="">
+        </div>
+    </div>
+    @endif
+    <div class="form-group">
+        <label for="image" class="col-sm-2 control-label">image</label>
         <div class="col-sm-6">
             <input type="file" class="form-control" id="image" name="image">
         </div>

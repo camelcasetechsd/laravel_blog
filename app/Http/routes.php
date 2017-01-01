@@ -20,6 +20,8 @@ Route::get('/home', 'HomeController@index');
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/posts/create', ['as' => 'post-create', 'uses' => 'PostsController@create']);
     Route::post('/posts/create', ['as' => 'post-create', 'uses' => 'PostsController@store']);
+    Route::get('/posts/update/{id}', ['as' => 'post-update', 'uses' => 'PostsController@edit']);
+    Route::post('/posts/update/{id}', ['as' => 'post-update', 'uses' => 'PostsController@update']);
     Route::post('/comments/create', ['as' => 'comment-create', 'uses' => 'CommentsController@store']);
     Route::get('profile',['as' => 'my-profile','uses' => 'UsersController@profile']);
     Route::get('users',['as' => 'show-users','uses' => 'UsersController@show_users']);
