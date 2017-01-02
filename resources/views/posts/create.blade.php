@@ -12,30 +12,38 @@
 @if(Session::has('message'))
 {!!Session::get('message')!!}
 @endif
-<form class="form-horizontal" action="{{route('post-create')}}" method="post"  enctype="multipart/form-data">
-    {{ csrf_field() }}
-    <div class="form-group">
-        <label for="title" class="col-sm-2 control-label">Title</label>
-        <div class="col-sm-6">
-            <input type="text" class="form-control" id="title" placeholder="title" name="title">
-        </div>
+
+{!! Form::model($post, ['route' => [$route,$post->id],'files' => true,'class' => 'form-horizontal'])!!}
+<div class="form-group">
+    {!! Form::label('title', 'Title',['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-6">
+        {!! Form::text('title',null,['class' => 'form-control', 'id' => 'title', 'placeholder' => 'title']) !!}
     </div>
-    <div class="form-group">
-        <label for="content" class="col-sm-2 control-label">content</label>
-        <div class="col-sm-6">
-            <textarea class="form-control" rows="10" cols="20" name="content"></textarea>
-        </div>
+</div>
+<div class="form-group">
+    {!! Form::label('content', 'Content',['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-6">
+        {!! Form::textarea('content',null,['class' => 'form-control','rows' => '10', 'cols' => '20' ]) !!}
     </div>
-    <div class="form-group">
-        <label for="image" class="col-sm-2 control-label">Title</label>
-        <div class="col-sm-6">
-            <input type="file" class="form-control" id="image" name="image">
-        </div>
+</div>
+@if($post->image)
+<div class="form-group">
+    <label for="image" class="col-sm-2 control-label"></label>
+    <div class="col-sm-6">
+        <img class="img-responsive" src="{{asset('postspics/'.$post->image)}}" alt="">
     </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default">Save</button>
-        </div>
+</div>
+@endif
+<div class="form-group">
+    {!! Form::label('image', 'Image',['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-6">
+        {!! Form::file('image',['accept' => "image/*",'class' => 'form-control','id' => 'image']) !!}
     </div>
-</form>
+</div>
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        {!! Form::submit('Save',['class' => 'btn btn-default']) !!}
+    </div>
+</div>
+{!! Form::close() !!}
 @endsection

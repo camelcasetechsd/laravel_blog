@@ -25,7 +25,9 @@ class CommentsController extends Controller
     public function edit($id)
     {
         $comment = Comment::find($id);
-        return view('website.comment-update', ['comment' => $comment]);
+        return view('website.comment-update', [
+            'comment' => $comment,
+             'route' => 'comment-update']);
     }
 
     public function update(CommentsRequest $request, $id)

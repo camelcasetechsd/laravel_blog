@@ -30,7 +30,7 @@ class PostsController extends Controller
     {
         return view('posts.create',[
             'post' => new Post,
-            'route' => route('post-create')
+            'route' => 'post-create'
         ]);
     }
 
@@ -42,7 +42,7 @@ class PostsController extends Controller
         $this->validate($request, Post::$rules);
         $user = Auth::user();
         $input = $request->all();
-        if ($request->file('image')->isValid()) {
+        if ($request->hasFile('image') &&$request->file('image')->isValid()) {
             $image = $request->file('image');
             $filename = time() . '.' . $image->getClientOriginalExtension();
             $path = public_path('postspics/');
@@ -67,7 +67,10 @@ class PostsController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-        return view('posts.update', ['post' => $post]);
+        return view('posts.create', [
+            'post' => $post,
+            'route' => 'post-update',
+            ]);
     }
 
     public function update(StoreBlogPost $request, $id)
@@ -75,13 +78,13 @@ class PostsController extends Controller
         $post = Post::find($id);
         $old_image = $post->image;
         $input = $request->all();
-        if ($request->file('image')->isValid()) {
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $input['image'] = $this->image_upload($request);
         }
         $input ['owner_id'] = Auth::user()->id;
         $updated = $post->update($input);
         if ($updated) {
-            if ($old_image && $input['image']) {
+            if ($old_image && !empty($input['image'])) {
                 File::delete(public_path('postspics/' . $old_image));
             }
             $request->session()->flash('message', '<div class = "alert alert-success">
