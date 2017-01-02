@@ -1,12 +1,14 @@
 @extends('layouts.web')
 @section('content')
 <div class="col-lg-8">
-
+    @if(Session::has('message'))
+    {!!Session::get('message')!!}
+    @endif
     <!-- Blog Post -->
 
     <!-- Title -->
     <h1>{{$post->title or ''}}</h1>
-
+    <a  href="{{route('download-as-pdf',$post->id)}}" class="pull-right btn">Download</a>
     <!-- Author -->
     <p class="lead">
         by <a href="{{route('get-user-profile',$post->User->id)}}">{{$post->User->name or ''}}</a>
@@ -54,18 +56,18 @@
     @foreach($post->Comments as $comment)
     <div class="media">
         <div class="col-sm-8">
-        <a class="pull-left" href="#">
-            <img class="media-object" src="http://placehold.it/64x64" alt="">
-        </a>
-        <div class="media-body">
-            <h4 class="media-heading">
-                <small>{{$comment->created_at}}</small>
-            </h4>
-            {{$comment->content}}
-        </div>
+            <a class="pull-left" href="#">
+                <img class="media-object" src="http://placehold.it/64x64" alt="">
+            </a>
+            <div class="media-body">
+                <h4 class="media-heading">
+                    <small>{{$comment->created_at}}</small>
+                </h4>
+                {{$comment->content}}
+            </div>
         </div>
         <div class="col-sm4">
-        <a href="{{route('comment-update',$comment->id)}}">Edit</a>
+            <a href="{{route('comment-update',$comment->id)}}">Edit</a>
         </div>
     </div>
     @endforeach

@@ -15,9 +15,7 @@ class CommentsRequest extends Request
      */
     public function authorize()
     {
-        $comment = Comment::find($this->route('id'));
-
-        return $comment && ($this->user()->id == $comment->owner_id);
+        return TRUE;
     }
 
     /**
