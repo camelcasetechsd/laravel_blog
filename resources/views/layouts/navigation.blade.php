@@ -25,10 +25,10 @@
             <ul class="nav navbar-nav navbar-right">
                 @if(Auth::check())
                 <li>
-                    <a href="{{route('post-create')}}">Add Post</a>
+                    <a href="{{route('post-create')}}" id="add-post">Add Post</a>
                 </li>
                 <li>
-                    <a href="{{route('my-profile')}}">profile</a>
+                    <a href="{{route('my-profile')}}" >profile</a>
                 </li>
                 <li>
                     <a href="{{ url('/logout') }}">logout</a>

@@ -1,9 +1,6 @@
 @extends('layouts.web')
 @section('content')
 <div class="col-lg-8">
-    @if(Session::has('message'))
-    {!!Session::get('message')!!}
-    @endif
     <!-- Blog Post -->
 
     <!-- Title -->

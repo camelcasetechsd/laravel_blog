@@ -15,7 +15,7 @@ Route::get('/','PostsController@index');
 
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'PostsController@index');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/posts/create', ['as' => 'post-create', 'uses' => 'PostsController@create']);
@@ -33,7 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('password/update',['as' => 'update-password','uses' => 'UsersController@update_credentials']);
 });
 /* * *********** posts  ******************* */
-Route::get('/posts', 'PostsController@index');
+//Route::get('/posts', 'PostsController@index');
 Route::get('/posts/{id}', ['as' => 'post-details', 'uses' => 'PostsController@post']);
 Route::get('pdf',function(){
     $post = App\Model\Post::first();

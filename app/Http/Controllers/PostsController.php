@@ -28,10 +28,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('posts.create',[
-            'post' => new Post,
-            'route' => 'post-create'
-        ]);
+        return view('posts.create');
     }
 
     /**
@@ -67,9 +64,8 @@ class PostsController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-        return view('posts.create', [
+        return view('posts.update', [
             'post' => $post,
-            'route' => 'post-update',
             ]);
     }
 
