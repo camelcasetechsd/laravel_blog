@@ -21,7 +21,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/posts/create', ['as' => 'post-create', 'uses' => 'PostsController@create']);
     Route::post('/posts/create', ['as' => 'post-create', 'uses' => 'PostsController@store']);
     Route::get('/posts/update/{id}', ['as' => 'post-update', 'uses' => 'PostsController@edit']);
-    Route::post('/posts/update/{id}', ['as' => 'post-update', 'uses' => 'PostsController@update']);
+    Route::patch('/posts/update/{id}', ['as' => 'post-update', 'uses' => 'PostsController@update']);
     Route::get('/posts/pdf/{id}', ['as' => 'download-as-pdf', 'uses' => 'PostsController@pdf']);
     Route::post('/comments/create', ['as' => 'comment-create', 'uses' => 'CommentsController@store']);
     Route::get('/comments/update/{id}', ['as' => 'comment-update', 'uses' => 'CommentsController@edit']);
@@ -35,7 +35,4 @@ Route::group(['middleware' => 'auth'], function () {
 /* * *********** posts  ******************* */
 //Route::get('/posts', 'PostsController@index');
 Route::get('/posts/{id}', ['as' => 'post-details', 'uses' => 'PostsController@post']);
-Route::get('pdf',function(){
-    $post = App\Model\Post::first();
-    return view('website.pdf',['post' => $post]);
-});
+

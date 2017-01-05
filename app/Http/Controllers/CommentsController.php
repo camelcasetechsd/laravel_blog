@@ -25,7 +25,7 @@ class CommentsController extends Controller
     public function edit($id)
     {
         $comment = Comment::find($id);
-        return view('website.comment-update', [
+        return view('posts.comments.comment-update', [
             'comment' => $comment,
              'route' => 'comment-update']);
     }
@@ -34,18 +34,16 @@ class CommentsController extends Controller
     {
         $comment = Comment::find($id);
         if ($comment->owner_id != Auth::user()->id) {
-            $request->session()->flash('message', "<div class = 'alert alert-danger'>
-                         <ul> <li> Error ,You don't have permission to update this comment  </li> </ul>
-                         </div>");
+            $request->session()->flash('message', " Error ,You don't have permission to update this comment");
+            $request->session()->flash('status', 'danger');
             return back();
         }
         $updated = $comment->update($request->all());
         if ($updated) {
             return redirect()->route('post-details', ['id' => $comment->post_id]);
         }
-        $request->session()->flash('message', '<div class = "alert alert-danger">
-                         <ul> <li> Error ,pleas enter correct password </li> </ul>
-                         </div>');
+        $request->session()->flash('message', 'Error ,pleas try again');
+         $request->session()->flash('status', 'danger');
         return back();
     }
 

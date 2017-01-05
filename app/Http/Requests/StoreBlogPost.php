@@ -15,9 +15,7 @@ class StoreBlogPost extends Request
      */
     public function authorize()
     {
-        $post = Post::find($this->route('id'));
-
-        return $post && ($this->user()->id == $post->owner_id);
+        return true;
     }
 
     /**
@@ -27,22 +25,23 @@ class StoreBlogPost extends Request
      */
     public function rules()
     {
-        return [
-            'title'   => 'required|max:255|unique:posts,title,'.$this->route('id'),
-            'content' => 'required',
-            'image'   => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ];
-
-        /* switch ($this->method) {
-          case "post":
-          return [
-          'title'   => 'required|unique:posts|max:255',
-          'content' => 'required',
-          'image'   => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-          ];
-          break;
-
-          } */
+       
+        switch ($this->method) {
+            case "POST":
+                return [
+                    'title'   => 'required|unique:posts|max:255',
+                    'content' => 'required',
+                    'image'   => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                ];
+                break;
+            case "PATCH":
+                return [
+                    'title'   => 'required|max:255|unique:posts,title,' . $this->route('id'),
+                    'content' => 'required',
+                    'image'   => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                ];
+                break;
+        }
     }
 
 }

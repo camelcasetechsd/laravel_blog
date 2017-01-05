@@ -14,7 +14,7 @@ class RouteTest extends TestCase
      */
     public function testBasicExample()
     {
-        $user = factory(App\User::class)->create();
+        $user = factory(App\Model\User::class)->create();
 
         $this->visit('/')
             ->click('Posts')

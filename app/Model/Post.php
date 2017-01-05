@@ -22,7 +22,7 @@ class Post extends Model
 
     public function User()
     {
-        return $this->belongsTo('App\User', 'owner_id');
+        return $this->belongsTo('App\Model\User', 'owner_id');
     }
 
 }

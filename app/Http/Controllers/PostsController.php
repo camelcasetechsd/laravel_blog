@@ -34,12 +34,11 @@ class PostsController extends Controller
     /**
      * store post
      */
-    public function store(Request $request)
+    public function store(StoreBlogPost $request)
     {
-        $this->validate($request, Post::$rules);
         $user = Auth::user();
         $input = $request->all();
-        if ($request->hasFile('image') &&$request->file('image')->isValid()) {
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $image = $request->file('image');
             $filename = time() . '.' . $image->getClientOriginalExtension();
             $path = public_path('postspics/');
@@ -49,14 +48,12 @@ class PostsController extends Controller
         $input ['owner_id'] = $user->id;
         $post = Post::create($input);
         if ($post) {
-            $request->session()->flash('message', '<div class = "alert alert-success">
-                         <ul> <li> Post was created successfully </li> </ul>
-                         </div>');
+            $request->session()->flash('message', ' Post was created successfully');
+            $request->session()->flash('status', 'success');
             return redirect()->route('post-details', ['id' => $post->id]);
         } else {
-            $request->session()->flash('message', '<div class = "alert alert-danger">
-                         <ul> <li> Error ,pleas try again </li> </ul>
-                         </div>');
+            $request->session()->flash('message', ' Error ,pleas try again ');
+            $request->session()->flash('status', 'danger');
         }
         return back()->withInput();
     }
@@ -66,12 +63,17 @@ class PostsController extends Controller
         $post = Post::find($id);
         return view('posts.update', [
             'post' => $post,
-            ]);
+        ]);
     }
 
     public function update(StoreBlogPost $request, $id)
     {
         $post = Post::find($id);
+        if (Auth::user()->id != $post->owner_id) {
+            $request->session()->flash('message', " Error ,You don't have permission to update this post");
+            $request->session()->flash('status', 'danger');
+            return back();
+        }
         $old_image = $post->image;
         $input = $request->all();
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
@@ -83,9 +85,9 @@ class PostsController extends Controller
             if ($old_image && !empty($input['image'])) {
                 File::delete(public_path('postspics/' . $old_image));
             }
-            $request->session()->flash('message', '<div class = "alert alert-success">
-                         <ul> <li> Post was updated successfully </li> </ul>
-                         </div>');
+            $request->session()->flash('message', ' Post was updated successfully 
+                         ');
+            $request->session()->flash('status', 'success');
             return redirect()->route('post-details', ['id' => $post->id]);
         } else
             return back()->withInput();
@@ -97,8 +99,7 @@ class PostsController extends Controller
     public function post($id)
     {
         $post = Post::find($id);
-        //dd($post->Comments);
-        return view('website.post', ['post' => $post]);
+        return view('posts.index', ['post' => $post]);
     }
 
     public function image_upload($request)
@@ -113,8 +114,8 @@ class PostsController extends Controller
     {
         $post = Post::find($id);
         //dd($post->toArray());
-        $pdf = PDF::loadView('website.pdf',$post->toArray());
-        return $pdf->download($post->title .'.pdf');
+        $pdf = PDF::loadView('website.pdf', $post->toArray());
+        return $pdf->download($post->title . '.pdf');
     }
 
 }

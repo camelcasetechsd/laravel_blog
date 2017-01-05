@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Faker\Factory as faker;
 
 class PostTest extends TestCase
 {
@@ -18,36 +19,38 @@ class PostTest extends TestCase
             ->seePageIs('/')
             ->assertResponseOk()
             ->assertViewHas('posts');
+        
     }
 
     public function testCreatePostFlow()
     {
-        $user = factory(App\User::class)->create();
+        $user = factory(App\Model\User::class)->create();
 
-        /*$this->actingAs($user)
+        $this->actingAs($user)
           ->visit('/posts/create')
-          ->type('new test post3', 'title')
+          ->type($this->getFaker()->word, 'title')
           ->type('first content', 'content')
           ->attach($this->getFile(), 'image')
           ->press('Save')
-          ->see('Post was created successfully'); */
+          ->see('Post was created successfully'); 
     }
 
     public function testCreatePost()
     {
-        $user = factory(App\User::class)->create();
+        $user = factory(App\Model\User::class)->create();
         $response = $this->actingAs($user)->call('POST', '/posts/create', [
-            'title'   => 'mohamed',
+            'title'   => $this->getFaker()->word,
             'content' => 'test',
             'image'   => $this->getFile()
         ]);
          $this->assertEquals(302, $response->status());
-        // $this->assertRedirectedToRoute('post-details',[19]);
+        // $id = App\Model\Post::latest()->first()->id;
+         //$this->assertRedirectedToRoute('post-details',[$id]);
     }
 
     public function getFile()
     {
-        $uploadedFile = public_path('postspics/') . '1483274113.jpg';
+        $uploadedFile = public_path('fakeImages/') . 'fa33c7452fa295479b6a0c329f4ed294.jpg';
         $file = [
             'name'     => $uploadedFile,
             'type'     => 'image/png',
@@ -56,6 +59,9 @@ class PostTest extends TestCase
             'error'    => 0
         ];
         return $this->getUploadedFileForTesting($file, [$uploadedFile => $uploadedFile], $uploadedFile);
+    }
+    public function getFaker(){
+        return  faker::create();
     }
 
 }

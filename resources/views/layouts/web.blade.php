@@ -13,8 +13,14 @@
         </div>
         @endif
 
-        @if(Session::has('message'))
-        {!!Session::get('message')!!}
+        @if(Session::has('status'))
+        <div class="alert alert-{{Session::get('status')}}">
+            <ul>
+
+                <li>{{Session::get('message')}}</li>
+
+            </ul>
+        </div>
         @endif
 
         @yield('content')   
